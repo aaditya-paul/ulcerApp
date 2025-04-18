@@ -8,21 +8,23 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import LOGOUT from "../../assets/logout.png";
+import LOGOUT from "../../../assets/logout.png";
+import USERIMG from "../../../assets/user.png";
 import * as ImagePicker from "expo-image-picker";
-import {useLocalSearchParams} from "expo-router";
-import CAM from "../../assets/cam.png";
+import {useLocalSearchParams, useNavigation} from "expo-router";
+import CAM from "../../../assets/cam.png";
 import {onAuthStateChanged, signOut} from "firebase/auth";
-import {auth, db, storage} from "../../firebaseConfig";
+import {auth, db, storage} from "../../../firebaseConfig";
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {doc, updateDoc, arrayUnion, setDoc} from "firebase/firestore";
+import NavBarDrawer from "../../../components/navBarDrawer";
 
 export default function UploadScreen({route}) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageSelected, setImageSelected] = useState(false);
   // const {email, name, number, user} = useLocalSearchParams(); // Destructure the params from the route
   const [USER, setUser] = useState(null);
-
+  const nav = useNavigation();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -164,99 +166,63 @@ export default function UploadScreen({route}) {
   };
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          width: "80%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: "bold",
-          }}
-        >
-          Upload Image
-        </Text>
-
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert("Logout", "Are you sure you want to logout?", [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel",
-              },
-              {
-                text: "OK",
-                onPress: () => signOut(auth),
-              },
-            ]);
-          }}
-        >
+    <NavBarDrawer title="Upload Image">
+      <View style={styles.container}>
+        <TouchableOpacity onPress={pickImage} style={styles.uploadSec}>
           <Image
-            source={LOGOUT}
-            style={{
-              width: 30,
-              height: 30,
-            }}
-            alt="Logout"
+            source={imageSelected ? {uri: selectedImage} : CAM}
+            style={
+              imageSelected
+                ? {
+                    width: "100%",
+                    height: "100%",
+                    padding: 10,
+                    objectFit: "cover",
+                    borderRadius: 10,
+                  }
+                : {width: 250, height: 250}
+            }
           />
+          {!imageSelected && (
+            <Text
+              style={{
+                color: "#f65e09",
+                fontWeight: "600",
+                position: "relative",
+              }}
+            >
+              Click To Upload Image!
+            </Text>
+          )}
         </TouchableOpacity>
-      </View>
-      <TouchableOpacity onPress={pickImage} style={styles.uploadSec}>
-        <Image
-          source={imageSelected ? {uri: selectedImage} : CAM}
-          style={
-            imageSelected
-              ? {
-                  width: "100%",
-                  height: "100%",
-                  padding: 10,
-                  objectFit: "cover",
-                  borderRadius: 10,
-                }
-              : {width: 250, height: 250}
-          }
-        />
-        {!imageSelected && (
-          <Text
-            style={{color: "#f65e09", fontWeight: "600", position: "relative"}}
+        <View style={{width: "80%"}}>
+          <TouchableOpacity
+            disabled={!imageSelected}
+            onPress={uploadImage}
+            style={[
+              styles.btn,
+              imageSelected
+                ? {
+                    backgroundColor: "#f17a0e",
+                  }
+                : {
+                    backgroundColor: "#ccc",
+                  },
+            ]}
           >
-            Click To Upload Image!
-          </Text>
-        )}
-      </TouchableOpacity>
-      <View style={{width: "80%"}}>
-        <TouchableOpacity
-          disabled={!imageSelected}
-          onPress={uploadImage}
-          style={[
-            styles.btn,
-            imageSelected
-              ? {
-                  backgroundColor: "#f17a0e",
-                }
-              : {
-                  backgroundColor: "#ccc",
-                },
-          ]}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 18,
-              fontWeight: "700",
-            }}
-          >
-            Submit
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontWeight: "700",
+              }}
+            >
+              Submit
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </NavBarDrawer>
   );
 }
 
@@ -264,7 +230,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: 50,
+    // TODO changed 50 to 20
+    marginTop: 20,
   },
   uploadSec: {
     width: "90%",

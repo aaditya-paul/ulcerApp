@@ -1,6 +1,6 @@
 import {View, Text} from "react-native";
 import React from "react";
-import UploadScreen from "./uploadScreen";
+// import UploadScreen from "./uploadScreen";
 import DetailsScreen from "./loading";
 import {StatusBar} from "expo-status-bar";
 import SignUp from "./(auth)/signup";
