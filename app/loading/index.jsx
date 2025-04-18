@@ -39,8 +39,8 @@ export const Loader = () => {
   return (
     <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
       <ActivityIndicator size="80" color="black" />
-    </View>
       <Text style={{fontSize: 20, fontWeight: "600"}}>Please Wait...</Text>
+    </View>
   );
 };
 
