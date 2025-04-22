@@ -9,13 +9,14 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Alert,
 } from "react-native";
 import NavBarDrawer from "../../../components/navBarDrawer";
 import {router} from "expo-router";
 import Loading, {Loader} from "../../loading";
 import {doc, getDoc} from "firebase/firestore";
 import {auth, db} from "../../../firebaseConfig";
-import {onAuthStateChanged} from "firebase/auth";
+import {onAuthStateChanged, signOut} from "firebase/auth";
 import {ScrollView, RefreshControl} from "react-native";
 
 // Example: Simulated fetch function (replace with Firebase logic)
@@ -94,18 +95,46 @@ export default function Profile() {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <View style={styles.card}>
-            <TouchableOpacity onPress={() => router.push("/edit")}>
-              <Image
-                source={require("../../../assets/edit.png")}
-                style={{
-                  width: 30,
-                  height: 30,
-                  alignSelf: "flex-end",
-                  marginBottom: 10,
+          <View style={[styles.card]}>
+            <View
+              style={{flexDirection: "row", justifyContent: "space-between"}}
+            >
+              <TouchableOpacity onPress={() => router.push("/edit")}>
+                <Image
+                  source={require("../../../assets/edit.png")}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    alignSelf: "flex-end",
+                    marginBottom: 10,
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert("Logout", "Are you sure you want to logout?", [
+                    {
+                      text: "Cancel",
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "cancel",
+                    },
+                    {
+                      text: "OK",
+                      onPress: () => signOut(auth),
+                    },
+                  ]);
                 }}
-              />
-            </TouchableOpacity>
+              >
+                <Image
+                  source={require("../../../assets/logout.png")}
+                  style={{
+                    width: 35,
+                    height: 35,
+                  }}
+                  alt="Logout"
+                />
+              </TouchableOpacity>
+            </View>
 
             <View style={{alignItems: "center"}}>
               <View

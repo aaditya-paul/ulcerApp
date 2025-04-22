@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ulcerApp",
+    "name": "Ulcer App",
     "slug": "ulcerApp",
     "scheme": "ulcer-app",
     "version": "1.0.0",
@@ -32,6 +32,9 @@
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "5c0a1068-03a4-4738-bf5d-4d816c236cd4"
       }
     }
   }

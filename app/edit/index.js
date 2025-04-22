@@ -13,6 +13,7 @@ import {doc, updateDoc, getDoc} from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {auth, db, storage} from "../../firebaseConfig";
 import {useRouter} from "expo-router";
+import {Loader} from "../loading";
 
 export default function EditProfileScreen() {
   const [name, setName] = useState("");
@@ -94,6 +95,10 @@ export default function EditProfileScreen() {
       setUploading(false);
     }
   };
+
+  if (name === "" || number === "") {
+    return <Loader />;
+  }
 
   return (
     <View style={styles.container}>

@@ -161,7 +161,7 @@ export default function UploadScreen({route}) {
       })
       .catch((error) => {
         console.error("Error:", error);
-        Alert.alert("Error", "Image upload failed");
+        Alert.alert("Error", "Image upload failed", error.message);
       });
   };
 
