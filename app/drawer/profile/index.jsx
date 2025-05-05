@@ -189,11 +189,34 @@ export default function Profile() {
                   }}
                   key={index}
                   onPress={() => {
-                    Linking.openURL(item.url);
+                    // router.push("/result", {
+                    //   params: {
+                    //     result: item.result,
+                    //     image: item.url,
+                    //     name: item.name,
+                    //   },
+                    // });
+                    router.push(
+                      `/result?result=${encodeURIComponent(
+                        item.result
+                      )}&image=${item.url}&name=${encodeURIComponent(
+                        item.name
+                      )}`
+                    );
+                    // Linking.openURL(item.url);
                   }}
                 >
                   <View>
-                    <Text style={styles.value}>{item.name}</Text>
+                    <Text style={styles.value}>
+                      {new Date(
+                        item.createdAt.seconds * 1000
+                      ).toLocaleDateString("en-IN", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })}
+                    </Text>
+                    {/* <Text>{item.result}</Text> */}
                   </View>
                 </TouchableOpacity>
               ))}

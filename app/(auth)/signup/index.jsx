@@ -162,4 +162,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
   },
+  fields: {
+    marginTop: 15,
+    width: "100%",
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#000",
+    padding: 12,
+    marginTop: 2,
+    borderRadius: 5,
+  },
+  secondaryText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "600",
+  },
+  btn: {
+    backgroundColor: "#000",
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: "center",
+  },
 });
