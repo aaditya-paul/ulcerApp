@@ -1,26 +1,34 @@
-import {View, Text} from "react-native";
-import React from "react";
-// import UploadScreen from "./uploadScreen";
-import DetailsScreen from "./loading";
+import React, {useEffect, useState} from "react";
+import {View} from "react-native";
 import {StatusBar} from "expo-status-bar";
+import Login from "./(auth)/login"; // your actual entry screen
 import SignUp from "./(auth)/signup";
-import Login from "./(auth)/login";
-import Loading from "./loading";
+import Loading from "./loading"; // or DetailsScreen
+import SplashScreen from "../components/splashScreen";
 
 const App = () => {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 5000); // show splash for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <View
-      style={{
-        height: "100%",
-        width: "100%",
-      }}
-    >
-      <Loading />
+    <View style={{flex: 1}}>
       <StatusBar translucent backgroundColor="transparent" />
-      {/* <Login /> */}
-      {/* <SignUp /> */}
-      {/* <Text>App</Text> */}
-      {/* <UploadScreen /> */}
+      {showSplash ? (
+        <SplashScreen />
+      ) : (
+        // show your real content
+        <Login />
+        // <SignUp />
+        // <Loading />
+        // <UploadScreen />
+      )}
     </View>
   );
 };

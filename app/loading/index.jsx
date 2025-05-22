@@ -12,7 +12,7 @@ const Loading = () => {
       if (user) {
         console.log("User is signed in:", user);
         //!  // TODO CHANGED
-        router.replace("/drawer/uploadScreen", {
+        router.replace("/info", {
           params: {
             email: user.email,
             user: user,
