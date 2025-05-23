@@ -24,7 +24,8 @@ const App = () => {
         <SplashScreen />
       ) : (
         // show your real content
-        <Login />
+        <Loading />
+        // <Login />
         // <SignUp />
         // <Loading />
         // <UploadScreen />

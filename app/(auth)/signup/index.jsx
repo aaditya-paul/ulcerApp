@@ -48,9 +48,13 @@ const SignUp = () => {
           uploads: [],
           createdAt: new Date(),
         });
+
+        // router.replace("/loading");
       })
       .catch((e) => {
         alert("Error", e.message);
+        // log("Error", e.message);
+        console.log("Error", e.message);
       });
   };
 
